@@ -6,6 +6,7 @@ const chaiExclude = require('chai-exclude');
 use(chaiExclude)
 
 require('dotenv').config();
+const http = 'http://localhost:3000';
 
 // Testes
 describe('Transfer', () => {
@@ -13,7 +14,7 @@ describe('Transfer', () => {
         before(async () => {
             const postLogin = require('../fixture/requisicoes/login/postLogin.json');
 
-            const respostaLogin = await request(process.env.BASE_URL_REST)
+            const respostaLogin = await request(http)
                 .post('/users/login')
                 .send(postLogin);
 
@@ -23,7 +24,7 @@ describe('Transfer', () => {
         it('Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
             const postTransfer = require('../fixture/requisicoes/transferencias/postTransfer.json');
             
-            const resposta = await request(process.env.BASE_URL_REST)
+            const resposta = await request(http)
                 .post('/transfers')
                 .set('Authorization', `Bearer ${token}`)
                 .send(postTransfer);
@@ -42,7 +43,7 @@ describe('Transfer', () => {
             it(`Testando a regra relacionada a ${teste.nomeDoTeste}`, async () => {
                 const postTransfer = require('../fixture/requisicoes/transferencias/postTransfer.json');
 
-                const resposta = await request(process.env.BASE_URL_REST)
+                const resposta = await request(http)
                     .post('/transfers')
                     .set('Authorization', `Bearer ${token}`)
                     .send(teste.postTransfer);
